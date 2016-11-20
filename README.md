@@ -2,8 +2,7 @@
 
 如何高效听完讲座？
 
-生成可以直接导入Google Calendar、Outlook等日历软件的iCal格式的讲座信息文件，帮
-助你快速听完8（16）次讲座。
+生成可以直接导入Google Calendar、Outlook等日历软件的iCal格式的讲座信息文件，帮助你快速听完8（16）次讲座。
 
 导入结果如下图
 
@@ -15,7 +14,19 @@
 
 将生成的`test.ics`导入你喜欢的日历应用里去。
 
-也可以用[我的](https://calendar.google.com/calendar/ical/eb5rgsqsgs5ji73ug6o4p79ln4%40group.calendar.google.com/public/basic.ics)
+也可以用[我的vps上的](http://vps.mickir.me:8000/test.ics)，在日历应用中选择添加来自http的ics文件
 
-## 将来
-增加自动更新功能
+## 自服务
+
+如果你想要自己搞一个，或者本大四狗毕业了不能继续提供服务了，可以按以下步骤进行。
+
+* 准备一台能持续运行的Linux电脑。
+* 安装crontab。
+* `git clone`
+* `chmod +x EasySeminar.py`
+* 运行一下EasySeminar.py测试一下
+* `vi /etc/crontab` 添加配置`0 12 * * * root cd /path/to/EasySeminar/ && ./EasySeminar.py`
+* `service cron restart`
+* `cd /path/to/EasySeminar/ && (python -m SimpleHTTPServer &)`
+* 现在你就可以用`http://youip:8000/test.ics`了
+
