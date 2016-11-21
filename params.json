@@ -1,0 +1,6 @@
+{
+  "name": "Easyseminar",
+  "tagline": "清华大学文化素质教育讲座信息iCal（貌似新生已经不是必须听讲座了。。。）",
+  "body": "# EasySeminar\r\n\r\n如何高效听完讲座？\r\n\r\n生成可以直接导入Google Calendar、Outlook等日历软件的iCal格式的讲座信息文件，帮助你快速听完8（16）次讲座。\r\n\r\n导入结果如下图\r\n\r\n![calendar](https://ooo.0o0.ooo/2016/11/21/5832be8307e32.jpg)\r\n\r\n## 使用\r\n\r\n直接运行即可。貌似需要python3。\r\n\r\n将生成的`test.ics`导入你喜欢的日历应用里去。\r\n\r\n也可以用[我的vps上的](http://vps.mickir.me:8000/test.ics)，在日历应用中选择添加来自http的ics文件\r\n\r\n## 自服务\r\n\r\n如果你想要自己搞一个，或者本大四狗毕业了不能继续提供服务了，可以按以下步骤进行。\r\n\r\n* 准备一台能持续运行的Linux电脑。\r\n* 安装crontab。\r\n* `git clone`\r\n* `chmod +x EasySeminar.py`\r\n* 运行一下EasySeminar.py测试一下\r\n* `vi /etc/crontab` 添加配置`0 12 * * * root cd /path/to/EasySeminar/ && ./EasySeminar.py > EasySeminar.log`\r\n* `service cron restart`\r\n* `cd /path/to/EasySeminar/ && (python -m SimpleHTTPServer &)`\r\n* 现在你就可以用`http://youip:8000/test.ics`了\r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}

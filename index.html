@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Easyseminar : 清华大学文化素质教育讲座信息iCal（貌似新生已经不是必须听讲座了。。。）">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Easyseminar</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/eesast/EasySeminar">View on GitHub</a>
+
+          <h1 id="project_title">Easyseminar</h1>
+          <h2 id="project_tagline">清华大学文化素质教育讲座信息iCal（貌似新生已经不是必须听讲座了。。。）</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/eesast/EasySeminar/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/eesast/EasySeminar/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="easyseminar" class="anchor" href="#easyseminar" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>EasySeminar</h1>
+
+<p>如何高效听完讲座？</p>
+
+<p>生成可以直接导入Google Calendar、Outlook等日历软件的iCal格式的讲座信息文件，帮助你快速听完8（16）次讲座。</p>
+
+<p>导入结果如下图</p>
+
+<p><img src="https://ooo.0o0.ooo/2016/11/21/5832be8307e32.jpg" alt="calendar"></p>
+
+<h2>
+<a id="使用" class="anchor" href="#%E4%BD%BF%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用</h2>
+
+<p>直接运行即可。貌似需要python3。</p>
+
+<p>将生成的<code>test.ics</code>导入你喜欢的日历应用里去。</p>
+
+<p>也可以用<a href="http://vps.mickir.me:8000/test.ics">我的vps上的</a>，在日历应用中选择添加来自http的ics文件</p>
+
+<h2>
+<a id="自服务" class="anchor" href="#%E8%87%AA%E6%9C%8D%E5%8A%A1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>自服务</h2>
+
+<p>如果你想要自己搞一个，或者本大四狗毕业了不能继续提供服务了，可以按以下步骤进行。</p>
+
+<ul>
+<li>准备一台能持续运行的Linux电脑。</li>
+<li>安装crontab。</li>
+<li><code>git clone</code></li>
+<li><code>chmod +x EasySeminar.py</code></li>
+<li>运行一下EasySeminar.py测试一下</li>
+<li>
+<code>vi /etc/crontab</code> 添加配置<code>0 12 * * * root cd /path/to/EasySeminar/ &amp;&amp; ./EasySeminar.py &gt; EasySeminar.log</code>
+</li>
+<li><code>service cron restart</code></li>
+<li><code>cd /path/to/EasySeminar/ &amp;&amp; (python -m SimpleHTTPServer &amp;)</code></li>
+<li>现在你就可以用<code>http://youip:8000/test.ics</code>了</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Easyseminar maintained by <a href="https://github.com/eesast">eesast</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
