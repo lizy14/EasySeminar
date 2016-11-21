@@ -25,7 +25,7 @@
 * `git clone`
 * `chmod +x EasySeminar.py`
 * 运行一下EasySeminar.py测试一下
-* `vi /etc/crontab` 添加配置`0 12 * * * root cd /path/to/EasySeminar/ && ./EasySeminar.py`
+* `vi /etc/crontab` 添加配置`0 12 * * * root cd /path/to/EasySeminar/ && ./EasySeminar.py > EasySeminar.log`
 * `service cron restart`
 * `cd /path/to/EasySeminar/ && (python -m SimpleHTTPServer &)`
 * 现在你就可以用`http://youip:8000/test.ics`了

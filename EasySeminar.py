@@ -24,8 +24,10 @@ import logging
 
 from user import username, password
 
-_DebugLevel = logging.DEBUG
-logging.basicConfig(level=logging.DEBUG)
+_FORMAT = '%(asctime)-15s %(message)s'
+_DebugLevel = logging.INFO
+logging.basicConfig(level=_DebugLevel, format=_FORMAT)
+logger = logging.getLogger(__name__)
 
 _session = requests.session()
 _URL_LOGIN = 'https://id.tsinghua.edu.cn/do/off/ui/auth/login/post/fa8077873a7a80b1cd6b185d5a796617/0?/j_spring_security_thauth_roaming_entry'
@@ -113,6 +115,7 @@ def get_res():
     return json.loads(get().decode('utf8'))['paginationList']
 
 if __name__ == "__main__":
+    event_len = 0
     cal = icalendar.Calendar()
     cal['prodid'] = '-//EasySeminar//ZH'
     cal['version'] = '2.0'
@@ -127,5 +130,7 @@ if __name__ == "__main__":
         event = event_c(record['courseNotice'])
         if event is not None:
             cal.add_component(event)
+            event_len += 1
+    logger.info("Receive {} notices".format(event_len))
     with open('test.ics', 'wb') as f:
         f.write(cal.to_ical())
