@@ -8,7 +8,7 @@ EasySeminar : A tool to make graduate easy again!
 
 Author        : Yongwen Zhuang
 Created       : 2016-11-19
-Last Modified : 2016-1-19
+Last Modified : 2016-12-1
 '''
 
 from bs4 import BeautifulSoup
