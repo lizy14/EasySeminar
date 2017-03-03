@@ -8,7 +8,7 @@ EasySeminar : A tool to make graduate easy again!
 
 Author        : Yongwen Zhuang
 Created       : 2016-11-19
-Last Modified : 2016-12-1
+Last Modified : 2017-3-3
 '''
 
 from bs4 import BeautifulSoup
@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 _session = requests.session()
 _URL_LOGIN = 'https://id.tsinghua.edu.cn/do/off/ui/auth/login/post/fa8077873a7a80b1cd6b185d5a796617/0?/j_spring_security_thauth_roaming_entry'
-_URL = 'http://learn.cic.tsinghua.edu.cn/b/myCourse/notice/listForStudent/2016-2017-1-00690651-90?currentPage=1&pageSize=150&_={}'
+_URL = 'http://learn.cic.tsinghua.edu.cn/b/myCourse/notice/listForStudent/2016-2017-2-00690651-90?currentPage=1&pageSize=150&_={}'
 
 def login():
     """
@@ -79,10 +79,18 @@ def event_c(record):
     :record: content of notice
     :returns: icalendar.Event
     """
+    def trim_title(string):
+        string = string.strip()
+        string = re.sub(
+            r'^第\d+周[（(]周[一二三四五六日][)）]',
+            '',
+            string
+        )
+        return string
     event = icalendar.Event()
     event['description'] = ''
     event['uid'] = record['id']
-    event['summary'] = record['title']
+    event['summary'] = trim_title(record['title'])
     notice = BeautifulSoup(record['detail'], 'html.parser')
     for line_soup in notice('p'):
         line = line_soup.text
