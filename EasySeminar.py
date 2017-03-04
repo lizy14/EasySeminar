@@ -97,7 +97,7 @@ def event_c(record):
         event['description'] += line+'\n'
         line = line.replace('\xa0','')
         line = line.replace(' ','')
-        if '演讲题目' == line[:4]:
+        if '演讲题目' == line[:4] or '讲座题目' == line[:4]:
             event['summary'] = line[5:]
         if '时间' == line[:2] or '日期' == line[:2]:
             (dtstart, dtend) = parse_time(line[3:])
