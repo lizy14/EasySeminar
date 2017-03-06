@@ -72,8 +72,25 @@ def parse_time(string):
     dtend = dtstart+datetime.timedelta(seconds = 90*60)
     return [dtstart, dtend]
 
+def event_c(event_dict):
+    if event_dict is None:
+        return None
+    event = icalendar.Event()
+    for key in ['description', 'uid', 'location', 'summary']:
+        event[key] = event_dict[key]
+    for key in ['dtstart', 'dtend']:
+        event.add(key, event_dict[key])
+    return event
 
-def event_c(record):
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, datetime.datetime):
+        serial = obj.isoformat()
+        return serial
+    raise TypeError ("Type not serializable")
+
+def event_dict_c(record):
     """
     create event use record
     :record: content of notice
@@ -87,7 +104,14 @@ def event_c(record):
             string
         )
         return string
-    event = icalendar.Event()
+    event = {
+        'description': '',
+        'summary': '',
+        'location': '',
+        'dtstart': None,
+        'dtend': None,
+        'uid': ''
+    }
     event['description'] = ''
     event['uid'] = record['id']
     event['summary'] = trim_title(record['title'])
@@ -101,11 +125,11 @@ def event_c(record):
             event['summary'] = line[5:]
         if '时间' == line[:2] or '日期' == line[:2]:
             (dtstart, dtend) = parse_time(line[3:])
-            event.add('dtstart', dtstart)
-            event.add('dtend', dtend)
+            event['dtstart'] = dtstart
+            event['dtend'] = dtend
         if '地点' == line[:2]:
             event['location'] = line[3:]
-    if event.has_key('dtstart'):
+    if event['dtstart'] is not None:
         return event
     return None
 
@@ -130,15 +154,20 @@ if __name__ == "__main__":
     cal['x-wr-calname'] = '学校讲座信息'
     cal['x-wr-timezone'] = 'Asia/Shanghai'
     cal['x-wr-caldesc'] = '网络学堂讲座信息'
+    dicts = []
     # res = test()
     res = get_res()
     # dict_keys(['pageMax', 'currentPageStr', 'pageStart', 'recordCount', 'recordCountStr', 'pageSize', 'recordList', 'currentPage'])
     # res keys
     for record in res['recordList']:
-        event = event_c(record['courseNotice'])
+        event_dict = event_dict_c(record['courseNotice'])
+        event = event_c(event_dict)
         if event is not None:
+            dicts.append(event_dict)
             cal.add_component(event)
             event_len += 1
     logger.info("Receive {} notices".format(event_len))
     with open('test.ics', 'wb') as f:
         f.write(cal.to_ical())
+    with open('test.json', 'w') as f:
+        json.dump(dicts, f, default=json_serial)
